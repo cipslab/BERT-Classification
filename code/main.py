@@ -161,6 +161,7 @@ if __name__ == "__main__":
     parser.add_argument('--save_file', type=str, default="new-blog-propaganda-results.csv")
     parser.add_argument('--num-labels', type=int, default=3, help='Number of labels to fine tune BERT on')
     parser.add_argument('--data-path', type='str', default='../data/blog_sample/blog_processed_disinfo.csv', help='Training/Testing DataFrame')
+    parser.add_argument('--save-model', action='store_true')
     args = parser.parse_args()
     
     all_df = pd.read_csv(args.data_path)
@@ -218,6 +219,6 @@ if __name__ == "__main__":
         classifier_model.to(device)
         representation_model = nn.DataParallel(representation_model)
         classifier_model = nn.DataParallel(classifier_model)
-        test(representation_model, classifier_model, dataloader, save_results=True, fname=args.save_file)
+        test(representation_model, classifier_model, dataloader, save_results=args.save_model, fname=args.save_file)
 
 
